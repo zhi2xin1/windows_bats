@@ -1,0 +1,31 @@
+作者：直心
+版本：V2.1
+时间：2020年01月05日
+
+脚本使用说明：
+使用时可以直接把bt种子拖到“start_download.bat”脚本上进行下载，或者运行脚本按照提示下载。
+进行下载之前脚本会自动更新tracklist。
+
+脚本版本说明：
+start_download.bat 这个是不开启log日志的版本，供日常使用。
+start_download_log.bat 这个是开启log日志的版本，供检查错误使用。
+start_download_non_update.bat 这个是不开启tracklist自动更新的版本。
+
+各文件和文件夹说明：
+conf：存储aria2的配置文件。更新bt-tracker时需要更新“aria2.conf”文件里的tracker列表。“aria2conf的示例.txt”是包括了中文注释的conf文件示例。特别注意，本整合包使用的conf文件里不能出现中文，即需要删除所有的中文注释。
+core：存储aria2的引擎文件。aria2引擎的64位的可执行程序命名为“aria2c.exe”放在这个目录下的“amd64”目录下，32位的可执行程序命名为“aria2c.exe”放在这个目录的“x86”目录下。这个目录下的“sed”目录，为文本查找替换工具sed。
+dht：存储aria2进行bt下载依赖的dht文件
+download：aria2的默认下载目录。
+log：存储aria2的log日志文件。
+
+有关软件的官方下载更新地址：
+aria2：http://aria2.github.io/
+sed：https://sourceforge.net/projects/gnuwin32/
+注释：sed 需要在以下两个链接的文件，解压到同一文件夹，Bin 文件内的 sed.exe 和 dll 不能删除。
+    https://sourceforge.net/projects/gnuwin32/files/sed/4.2.1/sed-4.2.1-bin.zip/download
+    https://sourceforge.net/projects/gnuwin32/files/sed/4.2.1/sed-4.2.1-dep.zip/download
+
+tracker列表推荐：
+https://trackerslist.com/#/zh?id=aria2
+https://trackerslist.com/all_aria2.txt（本整合包默认）
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt
