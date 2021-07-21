@@ -111,13 +111,13 @@ if "%password%"=="" (
     goto mode0_co_non
 )
 if "%overwrite%"=="Y" (
-    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%input%" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
+    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%input%" | "%~dp0\%sys%\zstd" -T0 -f -v  --adapt | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
 ) ^
 else if "%overwrite%"=="y" (
-    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%input%" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
+    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%input%" | "%~dp0\%sys%\zstd" -T0 -f -v  --adapt | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
 ) ^
 else if not exist "%output%\%output_name%.tar.zst.aes-256-cbc" (
-    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%input%" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
+    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%input%" | "%~dp0\%sys%\zstd" -T0 -f -v  --adapt | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
 ) ^
 else (
     @echo "文件已经存在！"
@@ -214,13 +214,13 @@ if "%password%"=="" (
     goto mode1_co_non
 )
 if "%overwrite%"=="Y" (
-    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%~1" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
+    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%~1" | "%~dp0\%sys%\zstd" -T0 -f -v  --adapt | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
 ) ^
 else if "%overwrite%"=="y" (
-    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%~1" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
+    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%~1" | "%~dp0\%sys%\zstd" -T0 -f -v  --adapt | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
 ) ^
 else if not exist "%output%\%output_name%.tar.zst.aes-256-cbc" (
-    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%~1" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
+    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%~1" | "%~dp0\%sys%\zstd" -T0 -f -v  --adapt | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
 ) ^
 else (
     @echo "文件已经存在！"
