@@ -1,0 +1,20 @@
+作者：直心
+版本：V1.0
+时间：2021年07月21日
+
+脚本使用说明：
+使用时可以直接把要压缩或解压的文件或文件夹拖到“tar-zstd.bat”脚本上进行压缩解压操作，或者运行脚本按照提示进行压缩解压。
+若拖入或输入的文件是以.tar.zst.aes-256-cbc结尾，则自动解压。反之则自动压缩。
+
+脚本版本说明：
+tar-zstd-opensll.bat：是压缩解压合一的脚本
+
+各文件和文件夹说明：
+amd64：里面是amd64系统下的应用程序
+x86：里面是x86系统下的应用程序
+
+
+有关软件的官方下载更新地址：
+zstd：https://github.com/facebook/zstd/
+7z：https://www.7-zip.org/
+opensll: https://slproweb.com/products/Win32OpenSSL.html
