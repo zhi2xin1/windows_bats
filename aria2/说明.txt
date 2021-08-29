@@ -1,6 +1,6 @@
 作者：直心
-版本：V2.1
-时间：2020年01月05日
+版本：V2.2
+时间：2021年08月27日
 
 脚本使用说明：
 使用时可以直接把bt种子拖到“start_download.bat”脚本上进行下载，或者运行脚本按照提示下载。
@@ -20,10 +20,7 @@ log：存储aria2的log日志文件。
 
 有关软件的官方下载更新地址：
 aria2：http://aria2.github.io/
-sed：https://sourceforge.net/projects/gnuwin32/
-注释：sed 需要在以下两个链接的文件，解压到同一文件夹，Bin 文件内的 sed.exe 和 dll 不能删除。
-    https://sourceforge.net/projects/gnuwin32/files/sed/4.2.1/sed-4.2.1-bin.zip/download
-    https://sourceforge.net/projects/gnuwin32/files/sed/4.2.1/sed-4.2.1-dep.zip/download
+sed：https://github.com/mbuilov/sed-windows
 
 tracker列表推荐：
 https://trackerslist.com/#/zh?id=aria2

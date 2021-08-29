@@ -4,8 +4,8 @@
 @echo #              aria2便捷下载脚本             #
 @echo #                                            #
 @echo #                 作者：直心                 #
-@echo #                 版本：V2.1                 #
-@echo #                 时间：2020年01月05日       #
+@echo #                 版本：V2.2                 #
+@echo #                 时间：2021年08月27日       #
 @echo #                                            #
 @echo ##############################################
 
@@ -26,9 +26,9 @@ set DOWNLOAD_LINK=https://trackerslist.com/%TRACKER_FILE%
 
 "%~dp0\core\%sys%\aria2c" --dir="%~dp0\download" --allow-overwrite=true "%DOWNLOAD_LINK%"
 
-"%~dp0\core\sed\bin\sed" -i ":a;N;s/\n/ /; ta;" "%~dp0\download\%TRACKER_FILE%"
-"%~dp0\core\sed\bin\sed" -i "1s/^/bt-tracker=/g; s/  /,/g; s/ $//;" "%~dp0\download\%TRACKER_FILE%"
-"%~dp0\core\sed\bin\sed" -i "/^bt-tracker=/d" "%CONF_FILE%"
+"%~dp0\core\%sys%\sed" -i ":a;N;s/\n/ /; ta;" "%~dp0\download\%TRACKER_FILE%"
+"%~dp0\core\%sys%\sed" -i "1s/^/bt-tracker=/g; s/  /,/g; s/ $//;" "%~dp0\download\%TRACKER_FILE%"
+"%~dp0\core\%sys%\sed" -i "/^bt-tracker=/d" "%CONF_FILE%"
 
 type "%~dp0\download\%TRACKER_FILE%" >> "%CONF_FILE%"
 if "%~1"=="" (
