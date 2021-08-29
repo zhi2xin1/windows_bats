@@ -1,11 +1,11 @@
 @echo off
 @echo ##############################################
 @echo #                                            #
-@echo #          tar-zstd 便捷解压缩脚本           #
+@echo #         tar-zstd 便捷压缩/解压脚本         #
 @echo #                                            #
 @echo #                 作者：直心                 #
-@echo #                 版本：V1.0                 #
-@echo #                 时间：2021年07月01日       #
+@echo #                 版本：V2.0                 #
+@echo #                 时间：2021年08月29日       #
 @echo #                                            #
 @echo ##############################################
 
@@ -28,8 +28,8 @@ if "%~1"=="" (
 @REM 非拖入的情况
 :mode0
 :input_again
-set /p input="请输入要解压缩的文件或文件夹的路径："
-for %%a in ("%input%") do set input=%%~a
+set /p input="请输入要处理的文件或文件夹的路径："
+for %%a in (%input%) do set input=%%~a
 @echo %input%
 if not exist "%input%" (
     @echo 文件或文件夹的路径不存在，请检查后重新输入。
@@ -52,11 +52,16 @@ else (
 )
 :mode0_de
 set /p outputa="请输入要解压到的文件夹路径（留空表示解压到与压缩包 *.tar.zst 同目录下的与 * 同名的子目录）:"
+for %%a in (%outputa%) do set outputa=%%~a
 if "%outputa%"=="" (
     set output=%output_fold%
 ) ^
 else (
     set output=%outputa%
+)
+if not exist "%output%" (
+    @echo 文件或文件夹的路径不存在，请检查后重新输入。
+    goto mode0_de
 )
 set /p overwrite="如果有文件名重复的文件是否要用解压出来的文件替换他们？（输入 Y 表示要， N 表示不要，默认不要）"
 if "%overwrite%"=="Y" (
@@ -76,6 +81,10 @@ if "%outputa%"=="" (
 ) ^
 else (
     set output=%outputa%
+)
+if not exist "%output%" (
+    @echo 文件或文件夹的路径不存在，请检查后重新输入。
+    goto mode0_co
 )
 set /p overwrite="如果有文件名重复的文件是否要用压缩后得到的文件替换他们？（输入 Y 表示要， N 表示不要，默认不要）"
 if "%overwrite%"=="Y" (
@@ -110,11 +119,16 @@ else (
 )
 :mode1_de
 set /p outputa="请输入要解压到的文件夹路径（留空表示解压到与压缩包 *.tar.zst 同目录下的与 * 同名的子目录）:"
+for %%a in (%outputa%) do set outputa=%%~a
 if "%outputa%"=="" (
     set output=%output_fold%
 ) ^
 else (
     set output=%outputa%
+)
+if not exist "%output%" (
+    @echo 文件或文件夹的路径不存在，请检查后重新输入。
+    goto mode1_de
 )
 set /p overwrite="如果有文件名重复的文件是否要用解压出来的文件替换他们？（输入 Y 表示要， N 表示不要，默认不要）"
 if "%overwrite%"=="Y" (
@@ -134,6 +148,10 @@ if "%outputa%"=="" (
 ) ^
 else (
     set output=%outputa%
+)
+if not exist "%output%" (
+    @echo 文件或文件夹的路径不存在，请检查后重新输入。
+    goto mode1_co
 )
 set /p overwrite="如果有文件名重复的文件是否要用压缩后得到的文件替换他们？（输入 Y 表示要， N 表示不要，默认不要）"
 if "%overwrite%"=="Y" (
