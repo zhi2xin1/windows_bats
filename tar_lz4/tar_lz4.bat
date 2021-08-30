@@ -30,7 +30,6 @@ if "%~1"=="" (
 :input_again
 set /p input="请输入要处理的文件或文件夹的路径："
 for %%a in (%input%) do set input=%%~a
-@echo %input%
 if not exist "%input%" (
     @echo 文件或文件夹的路径不存在，请检查后重新输入。
     goto input_again
