@@ -48,7 +48,7 @@ for %%a in ("%output_name%") do (
     set input_endwith1=%%~xa
 )
 set input_endwith=%input_endwith1%%input_endwith2%%input_endwith3%
-if "%input_endwith%"==".tar.zst.aes-256-cbc" (
+if "%input_endwith%"==".tar.zst.aes-256-ctr" (
     goto mode0_de_enc
 ) ^
 else if "%input_endwith%"==".tar.zst" (
@@ -82,7 +82,7 @@ else (
 )
 goto mode0_end
 :mode0_de_enc
-set /p outputa="请输入要解压到的文件夹路径（留空表示解压到与压缩包 *.tar.zst.aes-256-cbc 同目录下的与 * 同名的子目录）:"
+set /p outputa="请输入要解压到的文件夹路径（留空表示解压到与压缩包 *.tar.zst.aes-256-ctr 同目录下的与 * 同名的子目录）:"
 for %%a in (%outputa%) do set outputa=%%~a
 if "%outputa%"=="" (
     set output=%output_fold%
@@ -97,17 +97,17 @@ if not exist "%output%" (
 set /p overwrite="如果有文件名重复的文件是否要用解压出来的文件替换他们？（输入 Y 表示要， N 表示不要，默认不要）"
 set /p password="请输入压缩文件的密码："
 if "%overwrite%"=="Y" (
-    "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -d -pass pass:%password% -pbkdf2 -in "%input%" | "%~dp0\%sys%\zstd"  -dc - | "%~dp0\%sys%\7za" x -aos -o"%output%" -ttar -si
+    "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-ctr -d -pass pass:%password% -pbkdf2 -in "%input%" | "%~dp0\%sys%\zstd"  -dc - | "%~dp0\%sys%\7za" x -aos -o"%output%" -ttar -si
 ) ^
 else if "%overwrite%"=="y" (
-    "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -d -pass pass:%password% -pbkdf2 -in "%input%" | "%~dp0\%sys%\zstd"  -dc - | "%~dp0\%sys%\7za" x -aos -o"%output%" -ttar -si
+    "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-ctr -d -pass pass:%password% -pbkdf2 -in "%input%" | "%~dp0\%sys%\zstd"  -dc - | "%~dp0\%sys%\7za" x -aos -o"%output%" -ttar -si
 ) ^
 else (
-    "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -d -pass pass:%password% -pbkdf2 -in "%input%" | "%~dp0\%sys%\zstd"  -dc - | "%~dp0\%sys%\7za" x -aoa -o"%output%" -ttar -si
+    "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-ctr -d -pass pass:%password% -pbkdf2 -in "%input%" | "%~dp0\%sys%\zstd"  -dc - | "%~dp0\%sys%\7za" x -aoa -o"%output%" -ttar -si
 )
 goto mode0_end
 :mode0_co
-set /p outputa="请输入要保存压缩后得到的文件的路径（留空表示压缩到与输入目录 * 上级目录下的 *.tar.zst.aes-256-cbc（加密）或者 *.tar.zst（不加密））:"
+set /p outputa="请输入要保存压缩后得到的文件夹的路径（留空表示压缩到与输入目录 * 上级目录下的 *.tar.zst.aes-256-ctr（加密）或者 *.tar.zst（不加密））:"
 for %%a in (%outputa%) do set outputa=%%~a
 if "%outputa%"=="" (
     set output=%output_fold%
@@ -125,13 +125,13 @@ if "%password%"=="" (
     goto mode0_co_non
 )
 if "%overwrite%"=="Y" (
-    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%input%" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
+    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%input%" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-ctr -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-ctr"
 ) ^
 else if "%overwrite%"=="y" (
-    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%input%" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
+    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%input%" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-ctr -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-ctr"
 ) ^
-else if not exist "%output%\%output_name%.tar.zst.aes-256-cbc" (
-    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%input%" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
+else if not exist "%output%\%output_name%.tar.zst.aes-256-ctr" (
+    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%input%" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-ctr -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-ctr"
 ) ^
 else (
     @echo "文件已经存在！"
@@ -166,7 +166,7 @@ for %%a in ("%output_name%") do (
     set input_endwith1=%%~xa
 )
 set input_endwith=%input_endwith1%%input_endwith2%%input_endwith3%
-if "%input_endwith%"==".tar.zst.aes-256-cbc" (
+if "%input_endwith%"==".tar.zst.aes-256-ctr" (
     goto mode1_de_enc
 ) ^
 else if "%input_endwith%"==".tar.zst" (
@@ -200,7 +200,7 @@ else (
 )
 goto mode1_end
 :mode1_de_enc
-set /p outputa="请输入要解压到的文件夹路径（留空表示解压到与压缩包 *.tar.zst.aes-256-cbc 同目录下的与 * 同名的子目录）:"
+set /p outputa="请输入要解压到的文件夹路径（留空表示解压到与压缩包 *.tar.zst.aes-256-ctr 同目录下的与 * 同名的子目录）:"
 for %%a in (%outputa%) do set outputa=%%~a
 if "%outputa%"=="" (
     set output=%output_fold%
@@ -215,17 +215,17 @@ if not exist "%output%" (
 set /p overwrite="如果有文件名重复的文件是否要用解压出来的文件替换他们？（输入 Y 表示要， N 表示不要，默认不要）"
 set /p password="请输入压缩文件的密码："
 if "%overwrite%"=="Y" (
-    "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -d -pass pass:%password% -pbkdf2 -in "%~1" | "%~dp0\%sys%\zstd"  -dc - | "%~dp0\%sys%\7za" x -aos -o"%output%" -ttar -si 
+    "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-ctr -d -pass pass:%password% -pbkdf2 -in "%~1" | "%~dp0\%sys%\zstd"  -dc - | "%~dp0\%sys%\7za" x -aos -o"%output%" -ttar -si 
 ) ^
 else if "%overwrite%"=="y" (
-    "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -d -pass pass:%password% -pbkdf2 -in "%~1" | "%~dp0\%sys%\zstd"  -dc - | "%~dp0\%sys%\7za" x -aos -o"%output%" -ttar -si 
+    "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-ctr -d -pass pass:%password% -pbkdf2 -in "%~1" | "%~dp0\%sys%\zstd"  -dc - | "%~dp0\%sys%\7za" x -aos -o"%output%" -ttar -si 
 ) ^
 else (
-    "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -d -pass pass:%password% -pbkdf2 -in "%~1" | "%~dp0\%sys%\zstd"  -dc - | "%~dp0\%sys%\7za" x -aoa -o"%output%" -ttar -si 
+    "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-ctr -d -pass pass:%password% -pbkdf2 -in "%~1" | "%~dp0\%sys%\zstd"  -dc - | "%~dp0\%sys%\7za" x -aoa -o"%output%" -ttar -si 
 )
 goto mode1_end
 :mode1_co
-set /p outputa="请输入要保存压缩后得到的文件的路径（留空表示压缩到与输入目录 * 上级目录下的 *.tar.zst.aes-256-cbc（加密）或者 *.tar.zst（不加密））:"
+set /p outputa="请输入要保存压缩后得到的文件夹的路径（留空表示压缩到与输入目录 * 上级目录下的 *.tar.zst.aes-256-ctr（加密）或者 *.tar.zst（不加密））:"
 for %%a in (%outputa%) do set outputa=%%~a
 if "%outputa%"=="" (
     set output=%output_fold%
@@ -243,13 +243,13 @@ if "%password%"=="" (
     goto mode1_co_non
 )
 if "%overwrite%"=="Y" (
-    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%~1" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
+    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%~1" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-ctr -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-ctr"
 ) ^
 else if "%overwrite%"=="y" (
-    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%~1" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
+    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%~1" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-ctr -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-ctr"
 ) ^
-else if not exist "%output%\%output_name%.tar.zst.aes-256-cbc" (
-    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%~1" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-cbc -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-cbc"
+else if not exist "%output%\%output_name%.tar.zst.aes-256-ctr" (
+    "%~dp0\%sys%\7za" a dummy -r -ttar -so "%~1" | "%~dp0\%sys%\zstd" -T0 -f -v | "%~dp0\%sys%\OpenSSL\bin\openssl.exe" enc -aes-256-ctr -e -pass pass:%password% -pbkdf2 -in - -out "%output%\%output_name%.tar.zst.aes-256-ctr"
 ) ^
 else (
     @echo "文件已经存在！"
