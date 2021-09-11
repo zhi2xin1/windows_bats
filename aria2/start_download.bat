@@ -4,8 +4,8 @@
 @echo #              aria2便捷下载脚本             #
 @echo #                                            #
 @echo #                 作者：直心                 #
-@echo #                 版本：V2.2                 #
-@echo #                 时间：2021年08月27日       #
+@echo #                 版本：V2.3                 #
+@echo #                 时间：2021年09月11日       #
 @echo #                                            #
 @echo ##############################################
 
@@ -18,6 +18,12 @@ else (
 )
 @echo.
 @echo.
+set /p update="是否要更新 trackerslist ？（Y更新，N不更新，默认不更新）"
+if not "%update%"=="Y" (
+    if not "%update%"=="y" (
+        goto derict_download
+    )
+)
 @echo track list 更新开始
 :: aria2.conf位置、要下载的trackers文件，在这里修改
 set CONF_FILE=%~dp0\conf\aria2.conf
@@ -43,7 +49,7 @@ del "%~dp0\download\%TRACKER_FILE%"
 @echo.
 @echo.
 
-
+:derict_download
 if "%~1"=="" (
     set /p input="请输入下载文件的链接或bt种子的路径："
 ) ^
