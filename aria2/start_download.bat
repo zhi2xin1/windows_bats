@@ -1,11 +1,14 @@
 @echo off
+%1 mshta vbscript:CreateObject("Shell.Application").ShellExecute("cmd.exe","/c %~s0 ::","","runas",1)(window.close)&&exit
+cd /d "%~dp0"
+
 @echo ##############################################
 @echo #                                            #
 @echo #              aria2便捷下载脚本             #
 @echo #                                            #
 @echo #                 作者：直心                 #
-@echo #                 版本：V2.3                 #
-@echo #                 时间：2021年09月11日       #
+@echo #                 版本：V2.4                 #
+@echo #                 时间：2021年10月06日       #
 @echo #                                            #
 @echo ##############################################
 
