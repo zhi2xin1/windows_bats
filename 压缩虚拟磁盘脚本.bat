@@ -1,4 +1,6 @@
 @echo off
+%1 mshta vbscript:CreateObject("Shell.Application").ShellExecute("cmd.exe","/c %~s0 ::","","runas",1)(window.close)&&exit
+cd /d "%~dp0"
 @echo ##############################################
 @echo #                                            #
 @echo #              压缩虚拟磁盘脚本              #
@@ -11,8 +13,7 @@
 @echo.
 @echo.
 
-if exist compact.txt (del compact.txt)
-if not "%~1"=="" (goto f2)
+if exist compact.ps1 (del compact.ps1)
 
 ::非拖入
 :f1
@@ -23,18 +24,11 @@ if not exist "%input%" (
     goto f1
 )
 @echo 压缩开始
-echo select vdisk file="%input%" > compact.txt
-goto end
-
-::拖入
-:f2
-@echo 压缩开始
-echo select vdisk file="%input%" > compact.txt
-
-:end
-echo compact vdisk >> compact.txt
-diskpart /s compact.txt
-del compact.txt
+echo Mount-VHD -Path "%input%" -ReadOnly > .\compact.ps1
+echo Optimize-VHD -Path "%input%" -Mode Full >> .\compact.ps1
+echo Dismount-VHD "%input%" >> .\compact.ps1
+powershell .\compact.ps1
+del .\compact.ps1
 
 @echo 压缩完成
 pause
