@@ -5,8 +5,8 @@ title tar-zstd-openssl 便捷加解密加解压脚本
 @echo #   tar-zstd-openssl 便捷加解密加解压脚本    #
 @echo #                                            #
 @echo #                 作者：直心                 #
-@echo #                 版本：V2.0                 #
-@echo #                 时间：2021年08月29日       #
+@echo #                 版本：V2.2                #
+@echo #                 时间：2022年04月19日       #
 @echo #                                            #
 @echo ##############################################
 @echo.
@@ -47,12 +47,19 @@ for %%a in ("%output_name%") do (
 for %%a in ("%output_name%") do (
     set input_endwith1=%%~xa
 )
-set input_endwith=%input_endwith1%%input_endwith2%%input_endwith3%
-if "%input_endwith%"==".tar.zst.aes-256-ctr" (
-    goto mode0_de_enc
+
+@REM set input_endwith=%input_endwith1%%input_endwith2%%input_endwith3%
+if "%input_endwith1%"==".tar" (
+    if "%input_endwith2%"==".zst" (
+        if "%input_endwith3%"==".aes-256-ctr"   (
+            goto mode0_de_enc
+        )
+    )
 ) ^
-else if "%input_endwith%"==".tar.zst" (
-    goto mode0_de
+else if "%input_endwith2%"==".tar" (
+    if "%input_endwith3%"==".zst" (
+        goto mode0_de
+    )
 ) ^
 else (
     goto mode0_co
@@ -165,12 +172,18 @@ for %%a in ("%output_name%") do (
 for %%a in ("%output_name%") do (
     set input_endwith1=%%~xa
 )
-set input_endwith=%input_endwith1%%input_endwith2%%input_endwith3%
-if "%input_endwith%"==".tar.zst.aes-256-ctr" (
-    goto mode1_de_enc
+@REM set input_endwith=%input_endwith1%%input_endwith2%%input_endwith3%
+if "%input_endwith1%"==".tar" (
+    if "%input_endwith2%"==".zst" (
+        if "%input_endwith3%"==".aes-256-ctr"   (
+            goto mode1_de_enc
+        )
+    )
 ) ^
-else if "%input_endwith%"==".tar.zst" (
-    goto mode1_de
+else if "%input_endwith2%"==".tar" (
+    if "%input_endwith3%"==".zst" (
+        goto mode1_de
+    )
 ) ^
 else (
     goto mode1_co
